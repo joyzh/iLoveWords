@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.downtime=120.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,6 +40,17 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+-(void)showDownTime
+{
+    self.downtime=self.downtime-0.1;
+    self.timestr=[NSString stringWithFormat:@"%04.1f",self.downtime];
+    self.DownTime.text=self.timestr;
+    
+}
+
 - (IBAction)WordInput:(id)sender {
+}
+- (IBAction)Go:(id)sender {
 }
 @end

@@ -12,5 +12,17 @@
 - (IBAction)return:(id)sender;
 @property (strong, nonatomic) IBOutlet UILabel *WordShow;
 - (IBAction)WordInput:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *DownTime;
+@property float downtime;
+@property (retain,nonatomic) NSString *timestr;
+
+- (IBAction)Go:(id)sender;
+
+-(void)showDownTime;
+-(NSString *)getCurrentTime;
+-(void)showWord;
+-(void)hideWord;
+-(Boolean)isWordTrue;
+-(void)showResult;
 
 @end
