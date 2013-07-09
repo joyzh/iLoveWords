@@ -10,5 +10,7 @@
 
 @interface joyViewController : UIViewController
 - (IBAction)Play:(id)sender;
+- (IBAction)Help:(id)sender;
+- (IBAction)About:(id)sender;
 
 @end

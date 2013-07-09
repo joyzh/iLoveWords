@@ -8,6 +8,8 @@
 
 #import "joyViewController.h"
 #import "PlayViewController.h"
+#import "HelpViewController.h"
+#import "AboutViewController.h"
 
 @interface joyViewController ()
 
@@ -27,8 +29,22 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)Play:(id)sender {
+- (IBAction)Play:(id)sender
+{
     PlayViewController *ctrl=[[PlayViewController alloc]init];
     [self presentViewController:ctrl animated:YES completion:nil];
+}
+
+- (IBAction)Help:(id)sender
+{
+    HelpViewController *ctrl=[[HelpViewController alloc]init];
+    [self presentViewController:ctrl animated:YES completion:nil];
+}
+
+- (IBAction)About:(id)sender
+{
+    AboutViewController *ctrl=[[AboutViewController alloc]init];
+    [self presentViewController:ctrl animated:YES completion:nil];
+
 }
 @end

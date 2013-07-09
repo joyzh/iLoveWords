@@ -1,5 +1,5 @@
 //
-//  PlayViewController.h
+//  AboutViewController.h
 //  iLoveWords
 //
 //  Created by administrator on 13-7-9.
@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlayViewController : UIViewController
+@interface AboutViewController : UIViewController
 - (IBAction)return:(id)sender;
-@property (strong, nonatomic) IBOutlet UILabel *WordShow;
-- (IBAction)WordInput:(id)sender;
 
 @end

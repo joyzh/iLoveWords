@@ -1,18 +1,18 @@
 //
-//  PlayViewController.m
+//  AboutViewController.m
 //  iLoveWords
 //
 //  Created by administrator on 13-7-9.
 //  Copyright (c) 2013年 HFUT. All rights reserved.
 //
 
-#import "PlayViewController.h"
+#import "AboutViewController.h"
 
-@interface PlayViewController ()
+@interface AboutViewController ()
 
 @end
 
-@implementation PlayViewController
+@implementation AboutViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,7 +38,5 @@
 - (IBAction)return:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-- (IBAction)WordInput:(id)sender {
 }
 @end
