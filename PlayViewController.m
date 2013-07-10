@@ -7,7 +7,7 @@
 //
 
 #import "PlayViewController.h"
-#define kFileName @"data.plist"
+#define kFileName @"WordList.plist"
 
 @interface PlayViewController ()
 
@@ -28,8 +28,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    //initial varibles
     self.downtime=120.0;
+    
+    self.count=0;
+    self.count_right=0;
+    self.count_wrong=0;
+    
     //let plist word into array
+    self.list = [[NSArray alloc]initWithContentsOfFile:[self dataFilePath]];
     
 }
 
@@ -75,8 +83,16 @@
 
 -(void)showWord
 {
-    self.list = [[NSArray alloc]initWithContentsOfFile:[self dataFilePath]];
-    self.WordShow.text = [NSString stringWithFormat:@"%@",self.WordShow.text];
+    int y = arc4random() % 100;
+    int x = y%4;
+    //取出plist中的第x个元素
+    self.curWord=[self.list objectAtIndex:x];
+    
+    self.WordShow.text = [NSString stringWithFormat:@"%@ %@",self.WordShow.text,_curWord];
+    //what's the difference between _curWord and self.curWord
+    
+    //do the counting
+    self.count=self.count+1;
 }
 
 -(void)hideWord
@@ -86,16 +102,37 @@
 
 -(Boolean)isWordTrue:(NSString *)wordtmp
 {
-    
+    NSString *inputWord=self.inputWord.text;
+    if ([inputWord isEqualToString:self.curWord]) {
+        //bingo sound
+        
+        self.count_right=self.count_right+1;
+        return YES;
+    }
+    else
+    {
+        //wrong sound
+        
+        self.count_wrong=self.count_wrong+1;
+        return NO;
+    }
     
 }
 
 -(void)showResult
 {
+    NSString *tmp1 = [NSString stringWithFormat:@"%d",self.count];
+    NSString *tmp2= [NSString stringWithFormat:@"%d",self.count_right];
+    NSString *result=[NSString stringWithFormat:@"%@ %@ %@",tmp2,@"/",tmp1];
     
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Result" message:result delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    
+    [alert show];
 }
 
-- (IBAction)WordInput:(id)sender {
+- (IBAction)WordInput:(id)sender
+{
+    //
 }
 - (IBAction)Go:(id)sender {
 }
