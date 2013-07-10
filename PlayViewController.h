@@ -12,9 +12,14 @@
 - (IBAction)return:(id)sender;
 @property (strong, nonatomic) IBOutlet UILabel *WordShow;
 - (IBAction)WordInput:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextField *inputWord;
 @property (strong, nonatomic) IBOutlet UILabel *DownTime;
 @property float downtime;
 @property (retain,nonatomic) NSString *timestr;
+
+@property (retain,nonatomic)NSArray *list;//dataFilePath
+- (NSString *)dataFilePath;
+
 
 - (IBAction)Go:(id)sender;
 
@@ -22,7 +27,7 @@
 -(NSString *)getCurrentTime;
 -(void)showWord;
 -(void)hideWord;
--(Boolean)isWordTrue;
+-(Boolean)isWordTrue:(NSString *)wordtmp;
 -(void)showResult;
 
 @end
