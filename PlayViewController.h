@@ -10,22 +10,30 @@
 
 @interface PlayViewController : UIViewController
 - (IBAction)return:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UILabel *WordShow;
 @property  NSString *curWord;//current showing word
+
 - (IBAction)WordInput:(id)sender;//finish inputing
 @property (strong, nonatomic) IBOutlet UITextField *inputWord;
+
 @property (strong, nonatomic) IBOutlet UILabel *DownTime;
 @property float downtime;//total time
 @property (retain,nonatomic) NSString *timestr;
 
+@property (strong, nonatomic) IBOutlet UILabel *resultJudge;
+
+
 @property (retain,nonatomic)NSArray *list;//dataFilePath
 - (NSString *)dataFilePath;
 
+@property (strong, nonatomic) IBOutlet UIButton *btnGo;
 
 - (IBAction)Go:(id)sender;
 
 -(void)showDownTime;
 -(NSString *)getCurrentTime;
+@property  NSString *beginTime;//time started.
 
 -(void)showWord;
 -(void)hideWord;

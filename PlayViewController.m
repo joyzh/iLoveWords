@@ -7,7 +7,7 @@
 //
 
 #import "PlayViewController.h"
-#define kFileName @"WordList.plist"
+//#define kFileName @"WordList.plist"
 
 @interface PlayViewController ()
 
@@ -36,8 +36,8 @@
     self.count_right=0;
     self.count_wrong=0;
     
-    //let plist word into array
-    self.list = [[NSArray alloc]initWithContentsOfFile:[self dataFilePath]];
+    //initial array
+    self.list=[[NSArray alloc]initWithObjects:@"attend",@"account",@"against",@"because",@"between", nil];
     
 }
 
@@ -74,21 +74,22 @@
 
 }
 
+/*
 - (NSString *)dataFilePath
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return[documentsDirectory stringByAppendingPathComponent:kFileName];
-}
+}*/
 
 -(void)showWord
 {
     int y = arc4random() % 100;
-    int x = y%4;
-    //取出plist中的第x个元素
+    int x = y%10;
+    //取出list数组中的第x个元素
     self.curWord=[self.list objectAtIndex:x];
     
-    self.WordShow.text = [NSString stringWithFormat:@"%@ %@",self.WordShow.text,_curWord];
+    self.WordShow.text = [NSString stringWithFormat:@"%@",self.curWord];
     //what's the difference between _curWord and self.curWord
     
     //do the counting
@@ -103,16 +104,12 @@
 -(Boolean)isWordTrue:(NSString *)wordtmp
 {
     NSString *inputWord=self.inputWord.text;
-    if ([inputWord isEqualToString:self.curWord]) {
-        //bingo sound
-        
+    if ([inputWord isEqualToString:self.curWord]) {        
         self.count_right=self.count_right+1;
         return YES;
     }
     else
-    {
-        //wrong sound
-        
+    {                
         self.count_wrong=self.count_wrong+1;
         return NO;
     }
@@ -132,8 +129,55 @@
 
 - (IBAction)WordInput:(id)sender
 {
-    //
+    NSString *tmpWord=self.inputWord.text;
+    Boolean judgeResult=[self isWordTrue:tmpWord];
+    if (judgeResult) {
+        //bingo sound
+        self.resultJudge.hidden=NO;
+        self.resultJudge.text=@"Right!";
+    }
+    else
+   {
+        //wrong sound
+       self.resultJudge.hidden=NO;
+       self.resultJudge.text=@"Wrong!";
+
+   }
+    
+   NSString *currenTime=[self getCurrentTime];
+   float ftCurTime = [currenTime floatValue];
+   float ftBegTime = [self.beginTime floatValue];//Caution!
+
+     while((ftCurTime-ftBegTime)<self.downtime)
+{
+    [self showWord];
+    //[self hideWord];
+    NSString *tmpWord=self.inputWord.text;
+    Boolean judgeResult=[self isWordTrue:tmpWord];
+    if (judgeResult) {
+        //bingo sound
+        self.resultJudge.hidden=NO;
+        self.resultJudge.text=@"Right!";
+    }
+    else
+    {
+        //wrong sound
+        self.resultJudge.hidden=NO;
+        self.resultJudge.text=@"Wrong!";
+        
+    }
+    currenTime=[self getCurrentTime];
+    ftCurTime = [currenTime floatValue];
 }
-- (IBAction)Go:(id)sender {
+    
+}
+- (IBAction)Go:(id)sender
+{
+    self.btnGo.hidden=NO;//hide button Go
+    
+    [self showDownTime];
+    [self showWord];
+    //[self hideWord];
+    
 }
 @end
