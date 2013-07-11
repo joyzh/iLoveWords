@@ -9,6 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface PlayViewController : UIViewController
+
+
+//时间驱动器
+@property (strong,nonatomic) NSTimer *timer;
+-(void) updateLabel;//时间更新函数
+@property Boolean tag;
+@property float wordtime;//单词显示的时间
+
+- (IBAction)Ground:(id)sender;
 - (IBAction)return:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UILabel *WordShow;

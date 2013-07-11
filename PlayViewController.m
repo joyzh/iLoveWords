@@ -29,13 +29,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    //设置时间驱动
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:(0.1)target:self  selector:@selector(updateLabel) userInfo:nil repeats:YES];
+
+    
     //initial varibles
-    self.downtime=120.0;
+    //self.downtime=60.0;
     
-    self.count=0;
-    self.count_right=0;
-    self.count_wrong=0;
-    
+    //self.count=0;
+    //self.count_right=0;
+    //self.count_wrong=0;
+    self.tag = 0;
+    //self.wordtime = 5.0;
     //initial array
     self.list=[[NSArray alloc]initWithObjects:@"attend",@"account",@"against",@"because",@"between", nil];
     
@@ -46,6 +51,35 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+//一直执行
+-(void) updateLabel{
+    if (self.tag) {
+        if (self.downtime > 0.1) {
+            //显示倒计时
+            [self showDownTime];
+            if (self.wordtime < 5.0) {
+                self.WordShow.text = @"";
+                if (self.wordtime < 0.1) {
+                    self.wordtime = 8.0;
+                    [self showWord];
+                }
+            }
+        
+            
+        } else {
+            self.DownTime.text = @"Time up!";
+        
+        }
+
+    } else {
+        self.DownTime.text = @"Welcome rewiew English words！";
+    }
+    self.wordtime = self.wordtime - 0.1;        
+}
+
 
 - (IBAction)return:(id)sender
 {
@@ -85,7 +119,7 @@
 -(void)showWord
 {
     int y = arc4random() % 100;
-    int x = y%10;
+    int x = y%5;
     //取出list数组中的第x个元素
     self.curWord=[self.list objectAtIndex:x];
     
@@ -120,7 +154,7 @@
 {
     NSString *tmp1 = [NSString stringWithFormat:@"%d",self.count];
     NSString *tmp2= [NSString stringWithFormat:@"%d",self.count_right];
-    NSString *result=[NSString stringWithFormat:@"%@ %@ %@",tmp2,@"/",tmp1];
+    NSString *result=[NSString stringWithFormat:@"正确单词数：%@ /总单词数： %@",tmp2,tmp1];
     
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Result" message:result delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     
@@ -173,11 +207,50 @@
 }
 - (IBAction)Go:(id)sender
 {
+   
     self.btnGo.hidden=NO;//hide button Go
+     UIButton *btn=(UIButton *) sender;
+    if (btn.tag == 0) {
+        btn.tag = 1;
+        self.downtime = 60.0;
+        self.count = 0;
+        self.count_right = 0;
+        self.wordtime = 8;
+    } else {
+        btn.tag = 0;
+        [self showResult];
+    }
+    self.tag = btn.tag;
     
-    [self showDownTime];
     [self showWord];
     //[self hideWord];
+    
+}
+- (IBAction)Ground:(id)sender {
+    
+    [self.inputWord resignFirstResponder];
+    //[self inputWord];
+   
+    if (self.tag == 0) {
+        NSString *tmpWord=self.inputWord.text;
+        Boolean judgeResult=[self isWordTrue:tmpWord];
+        if (judgeResult) {
+            //bingo sound
+            self.resultJudge.hidden=NO;
+            self.resultJudge.text=@"Right!";
+            self.count_right = self.count_right +1;
+        }
+        else
+        {
+            //wrong sound
+            self.resultJudge.hidden=NO;
+            self.resultJudge.text=@"Wrong!";
+            
+        }
+        self.inputWord.text = @"";
+        [self showWord];//产生新的随机单词
+
+    }
     
 }
 @end
